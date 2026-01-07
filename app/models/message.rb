@@ -3,6 +3,8 @@ class Message < ApplicationRecord
 
   belongs_to :room, touch: true
   belongs_to :creator, class_name: "User", default: -> { Current.user }
+  belongs_to :parent, class_name: "Message", optional: true
+  has_many :replies, class_name: "Message", foreign_key: :parent_id, dependent: :destroy
 
   has_many :boosts, dependent: :destroy
 
